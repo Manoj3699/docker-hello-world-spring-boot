@@ -18,11 +18,13 @@ phases:
 
   pre_build:
     commands:
+      - aws configure set aws_access_key_id "AKIAU545LRP2JWPLZC6W" && aws configure set aws_secret_access_key "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" && aws configure set region ap-south-1 && aws configure set output "json"
       - echo Logging into Amazon EKS...
       - aws eks --region ap-south-1 update-kubeconfig --name manoj99
       - echo check config 
       - kubectl config view --minify
       - echo check kubectl access
+      - kubectl get svc
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 339095555060.dkr.ecr.ap-south-1.amazonaws.com
       - echo $REPOSITORY_URI
@@ -40,6 +42,7 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
       - docker push 339095555060.dkr.ecr.ap-south-1.amazonaws.com/manoj99:latest
+      - aws sts get-caller-identity
       - echo Push the latest image to cluster
       - kubectl apply -f docker-hello-world-spring-boot/deployment.yaml
       - kubectl apply -f docker-hello-world-spring-boot/service.yaml
