@@ -19,13 +19,13 @@ phases:
   pre_build:
     commands:
       - echo Logging into Amazon EKS...
-      - aws eks --region us-east-1 update-kubeconfig --name manoj99
+      - aws eks --region ap-south-1 update-kubeconfig --name manoj99
       - echo check config 
       - kubectl config view --minify
       - echo check kubectl access
       - kubectl get svc
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 339095555060.dkr.ecr.ap-south-1.amazonaws.com
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 339095555060.dkr.ecr.ap-south-1.amazonaws.com
       - echo $REPOSITORY_URI
 
       
